@@ -1,0 +1,18 @@
+<h1>Hi Customer</h1>
+<p>please pick one or more of the following items<p>
+<p>We currently offer the following discounts:
+- If someone buys 1 chocolate, they can get another one for free.
+- For every 3 beers bought, the customer gets a 10% discount on each one of them.
+- If someone buys a sandwich and a soda, they can get a chocolate for free.
+- During happy hour (17h00-19h00) beer and soda is only half price</p>
+<%= form_tag("cash_register", method: "post") do |f| %>
+  <% @items.each do |element| %>
+    <% element.each do |key, value| %>
+      <%= label_tag key, value.keys.first %>
+      <%= text_field_tag "[items]#{key}[quantity]", 0  %>
+      <%= hidden_field_tag "[items]#{key}[price]", value[:price]  %>
+    <% end %>
+  <% end %>
+  <%= submit_tag('Proceed to checkout') %>
+  <% puts params %>
+<% end %>
