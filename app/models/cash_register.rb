@@ -36,7 +36,7 @@ class CashRegister
   end
 
   def apply_discount?(rule)
-    (rule[:happy_hour].present? && rule[:discount] && happy_hour?(rule[:happy_hour])) || (rule[:happy_hour].blank? && !rule[:discount].nil?)
+    (rule[:happy_hour].present? && rule[:discount] && happy_hour?(rule[:happy_hour])) || (rule[:happy_hour].blank? && !rule[:discount].nil? && happy_hour?(rule[:happy_hour]))
   end
 
   def items_to_array(items)
@@ -59,6 +59,7 @@ class CashRegister
   end 
 
   def happy_hour?(times)
+    return false unless times.present?
     Time.now.hour >= times.first && Time.now.hour < times.last
   end
 
