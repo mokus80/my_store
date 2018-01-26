@@ -65,26 +65,22 @@ class CashRegister
   def apply_discount(rule, items, factor)
     per_item = items[rule[:buy].first]["price"].to_f / items[rule[:buy].first]["quantity"].to_i
     discounted = factor * rule[:buy_quantity].to_i
-    #binding.pry
+
     dis_price = discounted * per_item
     
-    puts dis_price
-    dis_price = dis_price - ( dis_price / 100 * dis_price )
-
-    puts "discounted prize: #{dis_price}"
+    dis_price = dis_price - ( rule[:discount].to_f / 100 * dis_price )
 
     rest = items[rule[:buy].first]["quantity"].to_i - discounted
 
     reg_price = rest * per_item
 
-    total = (dis_price + reg_price).to_s
-    items[rule[:buy].first]["price"] = total
+    items[rule[:buy].first]["price"] = (dis_price + reg_price).to_s
   end
 
   def total(items)
     items = items_to_array(items)
-    items.map {|h| h.values.collect { |d| d['prize'].to_i} }.flatten.inject(:+)
-    items
+
+    items.map {|h| h.values.collect { |d| d['price'].to_i} }.flatten.inject(:+)
   end
 
 end

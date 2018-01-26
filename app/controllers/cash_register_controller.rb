@@ -6,7 +6,6 @@ class CashRegisterController < ApplicationController
     @purchased_items = @shopping_cart.purchased
     @register = CashRegister.new
     @total = @register.compute_total(@purchased_items)
-
-    render json: @total
+    render 'index'
   end
 end
