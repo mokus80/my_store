@@ -1,57 +1,56 @@
 class CashRegister
-  include ActiveModel::Model
 
-  attr_accessor :items
+  attr_accessor :rules
 
   def initialize(rules)
     @rules = rules
   end
 
   def compute_total(items)
-    @rules.each do |rule|
+    self.rules.each do |rule|
       matches = items.keys & rule[:buy]
  
-      if matches(rule, items)
+      if self.class.matches(rule, items)
         
-        factor = calculate_factor(matches, items, rule)
+        factor = self.class.calculate_factor(matches, items, rule)
 
-        if apply_discount?(rule)
-          apply_discount(rule, items, factor)
+        if self.class.apply_discount?(rule)
+          self.class.apply_discount(rule, items, factor)
         end
        
         if rule[:freebie]
-          add_freebie(items, rule, factor)
+          self.class.add_freebie(items, rule, factor)
         end
       end
     end
     total(items)
   end
 
-  def apply_discount?(rule)
+  def self.apply_discount?(rule)
     (rule[:happy_hour].present? && !rule[:discount].nil? && happy_hour?(rule[:happy_hour])) || (rule[:happy_hour].blank? && !rule[:discount].nil? && !happy_hour?(rule[:happy_hour]))
   end
 
-  def calculate_factor(matches, items, rule)
+  def self.calculate_factor(matches, items, rule)
     matches.map do |match|
       (items[match][:quantity].to_f / rule[:buy_quantity].to_i).to_i
     end.min
   end
 
-  def matches(rule, items)
+  def self.matches(rule, items)
     match = items.keys & rule[:buy]
     match && match.sort == rule[:buy].sort
   end
 
-  def add_freebie(items, rule, factor)
+  def self.add_freebie(items, rule, factor)
     items[rule[:freebie]] = { 'quantity': (rule[:freebie_quantity].to_i * factor).to_s, 'price': '0' }
   end 
 
-  def happy_hour?(times)
+  def self.happy_hour?(times)
     return false unless times.present?
     Time.now.hour >= times.first && Time.now.hour < times.last
   end
 
-  def apply_discount(rule, items, factor)
+  def self.apply_discount(rule, items, factor)
     per_item = items[rule[:buy].first]["price"].to_f / items[rule[:buy].first]["quantity"].to_i
 
     discounted = factor * rule[:buy_quantity].to_i

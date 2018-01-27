@@ -7,8 +7,8 @@ class ShoppingCart
   end
 
   def purchased
-    @items = @items.select {|k,v| !v['quantity'].to_i.zero?}
-    update_prices(@items)
+    items = self.items.select {|k,v| !v['quantity'].to_i.zero?}
+    update_prices(items)
   end
 
   def update_prices(items)
