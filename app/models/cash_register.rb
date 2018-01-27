@@ -36,11 +36,7 @@ class CashRegister
   end
 
   def apply_discount?(rule)
-    (rule[:happy_hour].present? && rule[:discount] && happy_hour?(rule[:happy_hour])) || (rule[:happy_hour].blank? && !rule[:discount].nil? && happy_hour?(rule[:happy_hour]))
-  end
-
-  def items_to_array(items)
-    items.map {|k,v| {k => v}}
+    (rule[:happy_hour].present? && !rule[:discount].nil? && happy_hour?(rule[:happy_hour])) || (rule[:happy_hour].blank? && !rule[:discount].nil? && !happy_hour?(rule[:happy_hour]))
   end
 
   def calculate_factor(matches, items, rule)
@@ -55,7 +51,7 @@ class CashRegister
   end
 
   def add_freebie(items, rule, factor)
-    items[rule[:freebie]] = { 'quantity': (rule[:freebie_quantity].to_i * factor).to_s, 'prize': '0' }
+    items[rule[:freebie]] = { 'quantity': (rule[:freebie_quantity].to_i * factor).to_s, 'price': '0' }
   end 
 
   def happy_hour?(times)
@@ -65,23 +61,20 @@ class CashRegister
 
   def apply_discount(rule, items, factor)
     per_item = items[rule[:buy].first]["price"].to_f / items[rule[:buy].first]["quantity"].to_i
+
     discounted = factor * rule[:buy_quantity].to_i
 
     dis_price = discounted * per_item
     
     dis_price = dis_price - ( rule[:discount].to_f / 100 * dis_price )
 
-    rest = items[rule[:buy].first]["quantity"].to_i - discounted
-
-    reg_price = rest * per_item
+    reg_price = per_item * (items[rule[:buy].first]["quantity"].to_i - discounted)
 
     items[rule[:buy].first]["price"] = (dis_price + reg_price).to_s
   end
 
   def total(items)
-    items = items_to_array(items)
-
-    items.map {|h| h.values.collect { |d| d['price'].to_i} }.flatten.inject(:+)
+    items.map {|k,v|  v['price'].to_f}.compact.inject(:+)
   end
 
 end
