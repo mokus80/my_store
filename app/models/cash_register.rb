@@ -3,16 +3,8 @@ class CashRegister
 
   attr_accessor :items
 
-  RULES = [
-    { buy: ['Chocolate'], buy_quantity: '1', freebie: 'Chocolate', freebie_quantity: '1', discount: nil, happy_hour: [] },
-    { buy: ['Beer'], buy_quantity: '3', freebie: nil, freebie_quantity: nil, discount: '10' , happy_hour: [] },
-    { buy: ['Sandwich', 'Soda'], buy_quantity: '1', freebie: 'Chocolate', freebie_quantity: '1', discount: nil, happy_hour: [] },
-    { buy: ['Beer'], buy_quantity: '1', freebie: nil, freebie_quantity: nil, discount: '50', happy_hour: [17, 19] },
-    { buy: ['Soda'], buy_quantity: '1', freebie: nil, freebie_quantity: nil, discount: '50', happy_hour: [17, 19] }
-  ]
-
-  def initialize
-    @rules = RULES
+  def initialize(rules)
+    @rules = rules
   end
 
   def compute_total(items)
