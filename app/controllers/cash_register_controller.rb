@@ -9,9 +9,8 @@ class CashRegisterController < ApplicationController
   ]
 
   def create
-    puts params
-    @shopping_cart = ShoppingCart.new(params)
-    @purchased_items = @shopping_cart.purchased
+    @cart = ShoppingCart.new(params["items"].to_unsafe_h)
+    @purchased_items = @cart.purchased
     @register = CashRegister.new(RULES)
     @total = @register.compute_total(@purchased_items)
     render 'index'
