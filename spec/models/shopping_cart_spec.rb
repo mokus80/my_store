@@ -16,7 +16,7 @@ RSpec.describe ShoppingCart, :type => :model do
   describe ".purchased" do
     it "excludes " do
       expect(@cart.purchased).to eq(
-        {"Beer"=>{"quantity"=>"4", "price"=>6.0}, "Soda"=>{"quantity"=>"3", "price"=>7.5}, "Sandwich"=>{"quantity"=>"2", "price"=>8.0}}
+        {"Beer"=>{"quantity"=>"4", "price"=>"6.0"}, "Soda"=>{"quantity"=>"3", "price"=>"7.5"}, "Sandwich"=>{"quantity"=>"2", "price"=>"8.0"}}
         )
     end
   end
@@ -25,7 +25,7 @@ RSpec.describe ShoppingCart, :type => :model do
     it "multiplies price with quantity" do
       items = {"Beer"=>{"quantity"=>"4", "price"=>"1.5"}, "Soda"=>{"quantity"=>"3", "price"=>"2.5"}, "Sandwich"=>{"quantity"=>"2", "price"=>"4.0"}}
       expect(@cart.class.update_prices(items)).to eq(
-        {"Beer"=>{"quantity"=>"4", "price"=>6.0}, "Soda"=>{"quantity"=>"3", "price"=>7.5}, "Sandwich"=>{"quantity"=>"2", "price"=>8.0}}
+        {"Beer"=>{"quantity"=>"4", "price"=>"6.0"}, "Soda"=>{"quantity"=>"3", "price"=>"7.5"}, "Sandwich"=>{"quantity"=>"2", "price"=>"8.0"}}
         )
     end
   end
