@@ -42,3 +42,24 @@ Additional notes:
 * Feel free to come up with a completely different solution, creativity is encouraged.
 * Please document design decisions in an accompanying README.
 * Please provide at least unit-level tests.
+
+........
+
+Set up:
+
+* Clone project and run bundle
+* To start the server: 'rails s'
+* To run tests: 'rspec'
+
+My Solution:
+
+The code is designed as dynamically as possible in case my friend decides to add/edit the rules and items. I herefore tried to find a way to quantify the rules and discounts. In order to properly test the code, I created a different set of rules in the specs.
+
+The register is designed around the idea that the customer adds a number of items, and discounts/freebies are added based on that number. I later on realized that I could have used a different approach that checks the item and quantity for eligible discounts/freebies, e.g. customers adds two chocolates:
+
+My implementation adds two more chocolates so the customer gets 4 chocolates for the price of two.
+
+With the other approach the customer would get two chocolates for the price of one.
+
+However, the first approach encouraged the customer to buy more item so I left it 
+
