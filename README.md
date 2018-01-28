@@ -53,17 +53,21 @@ Set up:
 
 My Solution:
 
-The code is designed as dynamically as possible in case my friend decides to add/edit the rules and items. I herefore tried to find a way to quantify the rules and discounts. In order to properly test the code, I created a different set of rules in the specs.
+The code is designed as dynamically as possible in case my friend decides to add/edit rules and items. I tried to find a way to quantify the rules and discounts, using constants, no database needed here. In order to properly test the code, I created a different set of rules in the specs.
 
-The register is designed around the idea that the customer adds a number of items, and discounts/freebies are added based on that number. I later on realized that I could have used a different approach that checks the item and quantity for eligible discounts/freebies.
+The register is designed around the idea that the customer adds a number of items, and discounts/freebies are added based on that number. I later on realized that I could have used a different approach that checks the items for eligible discounts/freebies.
 
-E.g. customers adds two chocolates:
+E.g. customer adds 2 chocolates:
 
-My implementation adds two more chocolates so the customer gets 4 chocolates for the price of two.
+My implementation adds two more chocolates so the customer gets 4 chocolates for the price of 2.
 
-With the other approach the customer would get two chocolates for the price of one.
+With the other approach the customer would get 2 chocolates for the price of 1.
 
-However, the first approach encourages the customer to buy more items so i didn't change it ;).
+However, the first approach encourages the customer to buy more items so I stuck with it ;).
+
+For usability I provided a barebone interface, nothing fancy, focus is on the backend here.
+
+I followed best practices as well as possible, though the code could be improved a little with a bit more time (e.g. more concise methods)...
 
 
 
