@@ -13,7 +13,7 @@ class ShoppingCart
 
   def self.update_prices(items)
     items.each do |k, v|
-      v['price'] = (v['price'].to_f * v['quantity'].to_f).to_s
+      v['price'] = (v['price'].to_f * v['quantity'].to_f).round(2).to_s
     end
   end
 end

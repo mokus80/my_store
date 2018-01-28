@@ -26,6 +26,7 @@ class CashRegister
     total(items)
   end
 
+  #NOTE: The function checks different discounts for the same item, e.g. 3 beers during Happy Hour get the 10% discount + the 50% discount. If not wanted, update accordingly
   def self.apply_discount?(rule)
     rule = rule.stringify_keys
     (rule['happy_hour'].present? && !rule['discount'].nil? && happy_hour?(rule['happy_hour'])) || (rule['happy_hour'].blank? && !rule['discount'].nil? && !happy_hour?(rule['happy_hour']))
@@ -78,11 +79,11 @@ class CashRegister
 
     reg_price = per_item * (items[rule['buy'].first]["quantity"].to_i - discounted)
 
-    items[rule['buy'].first]["price"] = (dis_price + reg_price).to_s
+    items[rule['buy'].first]["price"] = (dis_price + reg_price).round(2).to_s
   end
 
   def total(items)
-    items.map {|k,v|  v['price'].to_f}.compact.inject(:+)
+    items.map {|k,v|  v['price'].to_f}.compact.inject(:+).round(2) rescue 0
   end
 
 end

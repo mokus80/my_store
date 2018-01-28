@@ -1,0 +1,11 @@
+<p>You purchased:</p>
+<% if @purchased_items %>
+  <% @purchased_items.each do |k, v| %>
+    <p><%= "#{v['quantity']} #{k}: #{v['price']}" %></p>
+  <% end %>
+  <br>
+  <p>Please pay: <%= @total %> Euros</p>
+<% else %>
+  <p>Nothing</p>
+<% end %>
+<%= link_to "Back to Home", root_path %>

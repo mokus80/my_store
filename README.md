@@ -63,7 +63,7 @@ My implementation adds two more chocolates so the customer gets 4 chocolates for
 
 With the other approach the customer would get two chocolates for the price of one.
 
-However, the first approach encourages the customer to buy more item so i didn't change it ;).
+However, the first approach encourages the customer to buy more items so i didn't change it ;).
 
 
 

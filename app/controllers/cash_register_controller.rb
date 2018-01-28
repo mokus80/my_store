@@ -13,6 +13,10 @@ class CashRegisterController < ApplicationController
     @purchased_items = @cart.purchased
     @register = CashRegister.new(RULES)
     @total = @register.compute_total(@purchased_items)
-    render 'index'
   end
+
+  def index
+    redirect_to root_path
+  end
+
 end
