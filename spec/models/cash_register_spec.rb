@@ -7,6 +7,8 @@ RSpec.describe CashRegister, :type => :model do
     },
     { buy: ['Chips'], buy_quantity: '3', freebie: 'Chips', freebie_quantity: '1', discount: nil, happy_hour: []
     },
+    { buy: ['Soda'], buy_quantity: '2', freebie: nil, freebie_quantity: '1', discount: '10', happy_hour: []
+    },
     { buy: ['Soda'], buy_quantity: '1', freebie: nil, freebie_quantity: '1', discount: '20', happy_hour: [Time.now.hour, Time.now.hour + 1]
     }
   ]
@@ -17,20 +19,21 @@ RSpec.describe CashRegister, :type => :model do
   end
 
   describe ".initialize" do
-    it "has 3 rules" do
-      expect(@register.rules.length).to eq(3)
+    it "has 4 rules" do
+      expect(@register.rules.length).to eq(4)
     end
   end
 
   describe ".compute total" do
     it "returns '29.2'" do
-      expect(@register.compute_total(@items)).to eq(29.2)
+      expect(@register.compute_total(@items)).to eq(28.8)
     end
   end
 
   describe "#apply_discount?" do
     it "returns true discount when given" do
       expect(CashRegister.apply_discount?(RULES.last)).to eq(true)
+      expect(CashRegister.apply_discount?(RULES.last(2).first)).to eq(true)
     end
 
     it "returns false when no discount given" do
@@ -44,12 +47,16 @@ RSpec.describe CashRegister, :type => :model do
       matches = RULES.first[:buy]
       expect(CashRegister.calculate_factor(matches, @items, RULES.first)).to eq(2)
     end
-    it "returns nil for first rule" do
-    	matches = RULES.first(2).last[:buy]
+    it "returns nil for second rule" do
+      matches = RULES.first(2).last[:buy]
       expect(CashRegister.calculate_factor(matches, @items, RULES.first(2).last)).to eq(nil)
     end
-    it "returns 3 for first rule" do
-    	matches = RULES.last[:buy]
+    it "returns 1 for the second last rule" do
+      matches = RULES.last(2).first[:buy]
+      expect(CashRegister.calculate_factor(matches, @items, RULES.last(2).first)).to eq(1)
+    end
+    it "returns 3 for last rule" do
+      matches = RULES.last[:buy]
       expect(CashRegister.calculate_factor(matches, @items, RULES.last)).to eq(3)
     end
   end
@@ -90,6 +97,9 @@ RSpec.describe CashRegister, :type => :model do
   describe "#apply discount" do
     it "return '6.0' for 3 Sodas during Happy Hour" do
       expect(CashRegister.apply_discount(RULES.last, @items, 3)).to eq("6.0")
+    end
+    it "return '7.0' for 3 Sodas" do
+      expect(CashRegister.apply_discount(RULES.last(2).first, @items, 1)).to eq("7.0")
     end
   end
 
