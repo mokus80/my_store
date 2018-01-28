@@ -10,15 +10,16 @@ class CashRegister
     self.rules.each do |rule|
       rule = rule.stringify_keys
       matches = CashRegister.matches(rule, items)
+      factor = CashRegister.calculate_factor(matches, items, rule)
  
-      if matches.present?
+      if matches.present? && factor
 
         if CashRegister.apply_discount?(rule)
-          CashRegister.apply_discount(rule, items, matches)
+          CashRegister.apply_discount(rule, items, factor)
         end
        
         if rule['freebie']
-          CashRegister.add_freebie(rule, items, matches)
+          CashRegister.add_freebie(rule, items, factor)
         end
       end
     end
@@ -48,9 +49,9 @@ class CashRegister
     match && match.sort == rule['buy'].sort ? match.sort : []
   end
 
-  def self.add_freebie(rule, items, matches)
+  def self.add_freebie(rule, items, factor)
     rule = rule.stringify_keys
-    factor = CashRegister.calculate_factor(matches, items, rule)
+    
     if items[rule['freebie']] && factor
       items[rule['freebie']] = { 'quantity': (rule['freebie_quantity'].to_i * factor + items[rule['freebie']]['quantity'].to_i).to_s, 'price': (0 + items[rule['freebie']]['price'].to_f).to_s }.stringify_keys
     elsif factor
@@ -64,10 +65,8 @@ class CashRegister
     Time.now.hour >= times.first && Time.now.hour < times.last
   end
 
-  def self.apply_discount(rule, items, matches)
+  def self.apply_discount(rule, items, factor)
     rule = rule.stringify_keys
-
-    factor = CashRegister.calculate_factor(matches, items, rule)
 
     per_item = items[rule['buy'].first]["price"].to_f / items[rule['buy'].first]["quantity"].to_i
 

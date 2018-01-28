@@ -62,7 +62,7 @@ RSpec.describe CashRegister, :type => :model do
 
   describe "#add freebie" do
     it "adds two chocolates" do
-      expect(CashRegister.add_freebie(RULES.first, @items, ["Chocolate", "Sandwich"])).to eq({"Beer"=>{"quantity"=>"4", "price"=>"6.0"}, "Soda"=>{"quantity"=>"3", "price"=>"7.5"}, "Sandwich"=>{"quantity"=>"3", "price"=>"9.0"}, "Chocolate"=>{"quantity"=>"4", "price"=>"6.2"}, "Chips"=>{"quantity"=>"1", "price"=>"2.0"}})
+      expect(CashRegister.add_freebie(RULES.first, @items, 2)).to eq({"Beer"=>{"quantity"=>"4", "price"=>"6.0"}, "Soda"=>{"quantity"=>"3", "price"=>"7.5"}, "Sandwich"=>{"quantity"=>"3", "price"=>"9.0"}, "Chocolate"=>{"quantity"=>"4", "price"=>"6.2"}, "Chips"=>{"quantity"=>"1", "price"=>"2.0"}})
     end
   end
 
@@ -89,7 +89,7 @@ RSpec.describe CashRegister, :type => :model do
 
   describe "#apply discount" do
     it "return '6.0' for 3 Sodas during Happy Hour" do
-      expect(CashRegister.apply_discount(RULES.last, @items, ["Soda"])).to eq("6.0")
+      expect(CashRegister.apply_discount(RULES.last, @items, 3)).to eq("6.0")
     end
   end
 
