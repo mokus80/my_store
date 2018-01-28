@@ -33,7 +33,7 @@ class CashRegister
   def self.calculate_factor(matches, items, rule)
     rule = rule.stringify_keys
     matches.map do |match|
-      if items[match]['quantity'].to_i > rule['buy_quantity'].to_i && rule['buy_quantity'].to_i > 0
+      if items[match]['quantity'].to_i >= rule['buy_quantity'].to_i && rule['buy_quantity'].to_i > 0
       (items[match]['quantity'].to_i / rule['buy_quantity'].to_i)
       else
         nil
