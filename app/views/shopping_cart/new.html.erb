@@ -23,7 +23,7 @@
       <li>
         <% item.each do |key, value| %>
           <%= label_tag key, key, value %>
-          <%= text_field_tag "[items][#{key}][quantity]", 0, size: 2  %>
+          <%= number_field_tag "[items][#{key}][quantity]", 0, size: 2  %>
           <%= hidden_field_tag "[items][#{key}][price]", value[:price]  %>
         <% end %>
       </li>

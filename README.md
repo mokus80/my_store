@@ -47,7 +47,7 @@ Additional notes:
 
 Set up:
 
-* Clone project and run bundle
+* Clone project and run 'bundle'
 * To start the server: 'rails s'
 * To run tests: 'rspec'
 
@@ -63,11 +63,11 @@ My implementation adds two more chocolates so the customer gets 4 chocolates for
 
 With the other approach the customer would get 2 chocolates for the price of 1.
 
-However, the first approach encourages the customer to buy more items so I stuck with it ;).
+However, the initial approach encourages the customer to buy more items so I stuck with it ;).
 
-For usability I provided a barebone interface, nothing fancy, focus is on the backend here.
+For usability I provided a barebone interface, nothing fancy, as the focus is on the backend here.
 
-I followed best practices as well as possible, though the code could be improved a little with a bit more time (e.g. more concise methods)...
+I followed best practices as well as possible, though the code could be improved a little with a bit more time (e.g. more elegant, concise methods)...
 
 
 
